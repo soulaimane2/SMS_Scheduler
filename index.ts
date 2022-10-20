@@ -1,10 +1,12 @@
-import express from "express"
 import http from "http"
+import app from "./app"
 import { connectDb } from "./utils/db.util"
+import dotenv from "dotenv"
 
-const PORT = 8080
+dotenv.config()
 
-const app = express()
+const PORT:number = Number(process.env.PORT) || 8080
+
 
 const server = http.createServer(app)
 

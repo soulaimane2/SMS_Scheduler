@@ -14,5 +14,5 @@ mongoose.connection.once("open", () => {
 })
 
 mongoose.connection.once("error",(err: any) => {
-    console.log(err)
+    throw new Error(err)
 })
