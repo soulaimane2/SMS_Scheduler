@@ -7,7 +7,7 @@ export async function addMessage({msg}:any) {
             message: msg
         }).save()
     
-        if(message) return {error: false, messageId: message._id}
+        if(message) return {error: false, messageId: message._id, message: message.message}
     
         return {error: true, message: "Something went Wrong!"}
 
