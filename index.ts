@@ -2,6 +2,7 @@ import http from "http"
 import app from "./app"
 import { connectDb } from "./utils/db.util"
 import dotenv from "dotenv"
+import schedule from "./Features/Schedule/schedule"
 
 dotenv.config()
 
@@ -13,5 +14,7 @@ const server = http.createServer(app)
 server.listen(PORT, async () => {
     await connectDb()
     console.log(`listening on ${PORT}`)
+    schedule.start()
+
 })
 

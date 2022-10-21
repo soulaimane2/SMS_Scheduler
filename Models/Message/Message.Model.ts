@@ -1,13 +1,14 @@
 import messageModel from "./Message.Schema";
 
-export async function addMessage({msg}:any) {
+export async function addMessage({dnis, messageId}:any) {
     try{
 
         const message = await new messageModel({
-            message: msg
+            dnis,
+            messageId
         }).save()
     
-        if(message) return {error: false, messageId: message._id, message: message.message}
+        if(message) return {error: false}
     
         return {error: true, message: "Something went Wrong!"}
 

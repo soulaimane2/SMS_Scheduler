@@ -1,11 +1,12 @@
 import { model, Schema } from "mongoose";
 
 const messageSchema = new Schema({
-    message: {
+    dnis: {
         type: String,
-        required: true,
-        minLength: 3,
-        maxLength: 500
+        match: /^([0|\+[0-9]{1,5})?([0-9]{10})$/
+    },
+    messageId: {
+        type: String,
     },
     status: {
         type: String,
@@ -14,6 +15,7 @@ const messageSchema = new Schema({
     },
     DeliveryTime: {
         type: Date,
+        default: null
     }
 })
 

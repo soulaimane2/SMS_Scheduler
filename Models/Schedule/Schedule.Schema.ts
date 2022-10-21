@@ -1,3 +1,4 @@
+import { boolean } from "joi";
 import mongoose, { model, Schema } from "mongoose";
 
 const scheduleSchema  = new Schema({
@@ -8,13 +9,19 @@ const scheduleSchema  = new Schema({
         }],
         required: [true, 'User phone number required']
       },
-    message: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: "Message"
+      message: {
+        type: String,
+        required: true,
+        minLength: 3,
+        maxLength: 500
     },
     time: {
         type: Date,
         default: Date.now()
+    },
+    sent:{
+        type: Boolean,
+        default: false
     }
 })
 

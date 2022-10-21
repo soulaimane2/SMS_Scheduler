@@ -12,18 +12,14 @@ export async function httpAddSchedule (req: Request, res: Response) {
         const {error} = validateSchema.validate({reciepients, message, time})
 
         if(error) return res.status(400).json({error: true, message: error.message})
-
-        const newMessage = await addMessage({msg: message})
-
-        if(newMessage.error) return res.status(400).json(newMessage.message)
         
-        const addNewSchedule = await addSchedule({contact: reciepients, messageId: newMessage.messageId, time:time})
+        const addNewSchedule = await addSchedule({contact: reciepients, message: message, time:time})
 
         if(addNewSchedule.error) return res.status(400).json(addNewSchedule)
 
         if(!runNow) return res.status(201).json({...addNewSchedule, message: "Your message is scheduled"})
 
-        const sendMSG = await smsSender({message: newMessage.message, dnis: addNewSchedule.schedule?.contact})
+        const sendMSG = await smsSender({message: message, dnis: addNewSchedule.schedule?.contact})
 
         if(sendMSG.error) return res.status(400).json(sendMSG)
 
