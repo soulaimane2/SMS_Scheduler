@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { httpAddSchedule } from "../controllers/Schedule.controller";
+import { httpAddSchedule, httpGetSchedules } from "../controllers/Schedule.controller";
 
 const ScheduleRoutes = Router()
 
-ScheduleRoutes.post("/schedule/add", httpAddSchedule)
+ScheduleRoutes.post("/schedules/add", httpAddSchedule)
+ScheduleRoutes.get("/schedules", httpGetSchedules)
 
 
 

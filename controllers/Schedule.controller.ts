@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
+import moment from "moment"
 import { smsSender } from "../Features/sms/sms"
 import { addMessage } from "../Models/Message/Message.Model"
-import { addSchedule } from "../Models/Schedule/Schedule.Model"
+import { addSchedule, getSchedules } from "../Models/Schedule/Schedule.Model"
 import { validateSchema } from "../utils/validators/schemas.validate"
 
 export async function httpAddSchedule (req: Request, res: Response) {
@@ -31,5 +32,29 @@ export async function httpAddSchedule (req: Request, res: Response) {
         
     }catch(err: any){
         return res.status(500).json({error: true, message:"Something went wrong!"})
+    }
+}
+
+
+
+export async function httpGetSchedules(req: Request, res: Response){
+    try{
+        const {page, from, to}:any = req.query
+
+        const PER_PAGE = 5
+
+        const skip = Number(page) * PER_PAGE || 0
+
+        const isoFrom = moment(from,"YYYYMMDDHHmm").add(1, "hour").toISOString()
+        const isoTo = moment(to,"YYYYMMDDHHmm").add(1, "hour").toISOString()
+
+        const schedules = await getSchedules({skip, limit: PER_PAGE, from:isoFrom, to:isoTo})
+
+        if(schedules.error) res.status(400).json(schedules)
+
+        return res.status(200).json(schedules)
+
+    }catch(err: any){
+        return res.status(500).json({error: true, message: err})
     }
 }

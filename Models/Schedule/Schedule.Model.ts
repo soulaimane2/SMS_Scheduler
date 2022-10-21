@@ -45,3 +45,23 @@ export async function updateScheduleStatus(scheduleId: string){
         return {error: true, message: err}
     }
 }
+
+export async function getSchedules({skip, limit, from, to}:any) {
+    try{
+
+        const opts = from && to && {
+            time: {
+                $gte: from,
+                $lte: to
+          }
+        }
+
+        const schedule = await scheduleModel.find(opts, {}, {skip: skip, limit: limit}).exec()
+
+        if(schedule) return {error: false, schedule}
+
+        return {error: false, message: "No schedules found!"}
+    }catch(err:any){
+        return {error: true, message: err}
+    }
+}
