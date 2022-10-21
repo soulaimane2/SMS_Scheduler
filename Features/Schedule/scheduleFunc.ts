@@ -1,4 +1,5 @@
 import moment from "moment";
+import { addMessage } from "../../Models/Message/Message.Model";
 import { getSchedule } from "../../Models/Schedule/Schedule.Model";
 import { smsSender } from "../sms/sms";
 
@@ -24,6 +25,9 @@ export async function sendMessages(schedule:any){
             message: sched.message.message,
             scheduleId: sched._id
         })
-
+        
+    const addMessages = await addMessage(Object.values(add.messages))
+    console.log(addMessages)
+    
     })
 }

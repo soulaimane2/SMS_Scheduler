@@ -15,6 +15,6 @@ export async function smsSender({message, dnis, scheduleId}:any){
 
     if(updateStatus.error) return {error: true, message: updateStatus.message}
 
-    return {error: false, ...response.data, message: "Message is send successfuly!"}
+    return {error: false, messages: {...response.data}, message: "Message is send successfuly!"}
     
 }

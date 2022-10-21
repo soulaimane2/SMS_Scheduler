@@ -23,6 +23,10 @@ export async function httpAddSchedule (req: Request, res: Response) {
 
         if(sendMSG.error) return res.status(400).json(sendMSG)
 
+        const addMessages = await addMessage(Object.values(sendMSG.messages))
+
+        if(addMessages.error) return res.status(400).json(addMessage)
+
         return res.status(200).json(sendMSG)
         
     }catch(err: any){

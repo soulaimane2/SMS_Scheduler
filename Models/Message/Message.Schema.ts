@@ -5,13 +5,13 @@ const messageSchema = new Schema({
         type: String,
         match: /^([0|\+[0-9]{1,5})?([0-9]{10})$/
     },
-    messageId: {
+    message_id: {
         type: String,
     },
     status: {
         type: String,
         enum: ["ACCEPTD","DELIVRD","UNDELIV","UNKNOWN"],
-        default: "UNKNOWN"
+        default: "ACCEPTD"
     },
     DeliveryTime: {
         type: Date,
