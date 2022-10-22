@@ -46,22 +46,38 @@ export async function updateScheduleStatus(scheduleId: string){
     }
 }
 
-export async function getSchedules({skip, limit, from, to}:any) {
+export async function getSchedules({skip, limit, from, to, sent}:any) {
     try{
+
+        const status:any = sent !== undefined && "sent"
 
         const opts = from && to && {
             time: {
                 $gte: from,
                 $lte: to
-          }
+          },
         }
 
-        const schedule = await scheduleModel.find(opts, {}, {skip: skip, limit: limit}).exec()
+          const schedule = await scheduleModel.find({...opts, [status]: sent}, {}, {skip: skip, limit: limit}).exec()
 
         if(schedule) return {error: false, schedule}
 
         return {error: false, message: "No schedules found!"}
     }catch(err:any){
         return {error: true, message: err}
+    }
+}
+
+export async function getScheduleById(schedule_id:string){
+    try{
+
+        const schedule = await scheduleModel.findById(schedule_id).exec()
+
+        if(schedule) return {error: false, schedule}
+
+        return {error: true, message: "No Schedule with this ID is found!"}
+
+    }catch(err: any){
+        return {error: true, message: "something went wrong!"}
     }
 }

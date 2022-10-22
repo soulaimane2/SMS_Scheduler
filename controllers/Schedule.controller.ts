@@ -39,7 +39,7 @@ export async function httpAddSchedule (req: Request, res: Response) {
 
 export async function httpGetSchedules(req: Request, res: Response){
     try{
-        const {page, from, to}:any = req.query
+        const {page, from, to, sent}:any = req.query
 
         const PER_PAGE = 5
 
@@ -48,7 +48,7 @@ export async function httpGetSchedules(req: Request, res: Response){
         const isoFrom = moment(from,"YYYYMMDDHHmm").add(1, "hour").toISOString()
         const isoTo = moment(to,"YYYYMMDDHHmm").add(1, "hour").toISOString()
 
-        const schedules = await getSchedules({skip, limit: PER_PAGE, from:isoFrom, to:isoTo})
+        const schedules = await getSchedules({skip, limit: PER_PAGE, from:isoFrom, to:isoTo, sent})
 
         if(schedules.error) res.status(400).json(schedules)
 
