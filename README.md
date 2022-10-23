@@ -107,7 +107,8 @@ To get a local copy up and running there are 2 ways (docker or manually)
   ```sh
    npm start
    ```
-    #### use (DOCKER)
+   #### use Docker
+
 3. create a `.env` file 
 4. Enter your Mongo URI in `.env`
    ```
