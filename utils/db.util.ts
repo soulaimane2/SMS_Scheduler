@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { logger } from "../log/log";
 
 dotenv.config();
 
@@ -10,9 +11,10 @@ export const connectDb = async () => {
 };
 
 mongoose.connection.once("open", () => {
-  console.log("Connected successfuly");
+  logger.log({ level: "info", message: `"Connected successfuly"` });
 });
 
 mongoose.connection.once("error", (err: any) => {
+  logger.log({ level: "error", message: err });
   throw new Error(err);
 });

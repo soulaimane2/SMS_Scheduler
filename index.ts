@@ -4,6 +4,7 @@ import { connectDb } from "./utils/db.util";
 import dotenv from "dotenv";
 import schedule from "./Features/Schedule/schedule";
 import checkingSMS from "./Features/sms/checkingSMS";
+import { logger } from "./log/log";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const server = http.createServer(app);
 
 server.listen(PORT, async () => {
   await connectDb();
-  console.log(`listening on ${PORT}`);
+  logger.log({ level: "info", message: `listening on ${PORT}` });
   schedule.start();
   checkingSMS.start();
 });

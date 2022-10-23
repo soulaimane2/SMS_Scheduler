@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import moment from "moment";
+import { logger } from "../log/log";
 import { getSMSByScheduleId } from "../Models/Message/Message.Model";
 
 export async function httpGetSMS(req: Request, res: Response) {
@@ -23,10 +24,23 @@ export async function httpGetSMS(req: Request, res: Response) {
       to: isoTo,
     });
 
-    if (error) return res.status(400).json({ error, message });
+    if (error) {
+      logger.log({ level: "info", message: message });
 
-    if (sms !== undefined) return res.status(200).json({ error, sms });
+      return res.status(400).json({ error, message });
+    }
+
+    if (sms !== undefined) {
+      logger.log({ level: "info", message: "SMSs fetched successfuly" });
+
+      return res.status(200).json({ error, sms });
+    }
   } catch (err: any) {
+    logger.log({
+      level: "error",
+      message: "something went unexpectedly wrong!",
+    });
+
     return res
       .status(500)
       .json({ error: true, message: "Something went unexpectedly wrong!" });

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import moment from "moment";
 import { smsSender } from "../Features/sms/sms";
+import { logger } from "../log/log";
 import { addMessage } from "../Models/Message/Message.Model";
 import { addSchedule, getSchedules } from "../Models/Schedule/Schedule.Model";
 import { validateSchema } from "../utils/validators/schemas.validate";
@@ -11,16 +12,22 @@ export async function httpAddSchedule(req: Request, res: Response) {
 
     const { error } = validateSchema.validate({ reciepients, message, time });
 
-    if (error)
-      return res.status(400).json({ error: true, message: error.message });
+    if (error) {
+      logger.log({ level: "info", message: "unvalid request" });
 
+      return res.status(400).json({ error: true, message: error.message });
+    }
     const addNewSchedule = await addSchedule({
       contact: reciepients,
       message: message,
       time: time,
     });
 
-    if (addNewSchedule.error) return res.status(400).json(addNewSchedule);
+    if (addNewSchedule.error) {
+      logger.log({ level: "info", message: addNewSchedule.message });
+
+      return res.status(400).json(addNewSchedule);
+    }
 
     if (!runNow)
       return res
@@ -32,14 +39,25 @@ export async function httpAddSchedule(req: Request, res: Response) {
       dnis: addNewSchedule.schedule?.contact,
     });
 
-    if (sendMSG.error) return res.status(400).json(sendMSG);
+    if (sendMSG.error) {
+      logger.log({ level: "info", message: sendMSG.message });
+
+      return res.status(400).json(sendMSG);
+    }
 
     const addMessages = await addMessage(Object.values(sendMSG.messages));
 
-    if (addMessages.error) return res.status(400).json(addMessage);
+    if (addMessages.error) {
+      logger.log({ level: "info", message: addMessages.message });
+
+      return res.status(400).json(addMessage);
+    }
+    logger.log({ level: "info", message: "Schedule sent successfuly" });
 
     return res.status(200).json(sendMSG);
   } catch (err: any) {
+    logger.log({ level: "error", message: err });
+
     return res
       .status(500)
       .json({ error: true, message: "Something went wrong!" });
@@ -65,10 +83,17 @@ export async function httpGetSchedules(req: Request, res: Response) {
       sent,
     });
 
-    if (schedules.error) res.status(400).json(schedules);
+    if (schedules.error) {
+      logger.log({ level: "info", message: schedules.message });
+
+      return res.status(400).json(schedules);
+    }
+
+    logger.log({ level: "info", message: "Schedules found" });
 
     return res.status(200).json(schedules);
   } catch (err: any) {
+    logger.log({ level: "error", message: err });
     return res.status(500).json({ error: true, message: err });
   }
 }
