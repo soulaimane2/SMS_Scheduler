@@ -21,11 +21,13 @@ const ScheduleRoutes = Router()
  *                  type: string
  *                  required: true 
  *                time:
- *                  type: string 
+ *                  type: string
+ *                  example: "example: 2022-10-21T02:49:07.701+00:00"
  *                reciepients:
  *                  type: array
  *                  items:
  *                    type: string
+ *                    example: +xxxxxxxxxxxx
  *                  required: true 
  *                runNow:
  *                  type: boolean
@@ -53,12 +55,14 @@ ScheduleRoutes.post("/schedules/add", httpAddSchedule)
  *          name: from
  *          schema:
  *            type: string
+ *            example: YYYYMMDDHHmm
  *          required: false
  *          description: this is starting date you want to filter with
  *        - in: query
  *          name: to
  *          schema:
  *            type: string
+ *            example: YYYYMMDDHHmm
  *          required: false
  *          description: this is ending date you want to filter with
  *        - in: query

@@ -27,12 +27,14 @@ const SMSRouter = Router()
  *          name: from
  *          schema:
  *            type: string
+ *            example: YYYYMMDDHHmm
  *          required: false
  *          description: this is starting date you want to filter with
  *        - in: query
  *          name: to
  *          schema:
  *            type: string
+ *            example: YYYYMMDDHHmm
  *          required: false
  *          description: this is ending date you want to filter with
  *        - in: query
