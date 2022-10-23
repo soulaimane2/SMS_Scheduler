@@ -126,9 +126,12 @@ To get a local copy up and running there are 2 ways (docker or manually)
     docker run -p [port you want to expose]:[port specified in the .env file] [Container tag]
     ```
 
-### IMPORTANT!
 
-  make sure you create the .env file with db DB_STRING and PORT
+## API EndPoints
+ #### for API endpoints docs go http://localhost:[PORT]/api-docs/
+ 
+### IMPORTANT!
+  #### make sure you create the .env file with db DB_STRING and PORT
 
 <!-- USAGE EXAMPLES -->
 ## Usage
