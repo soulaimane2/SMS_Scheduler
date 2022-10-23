@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { httpGetSMS } from "../controllers/SMS.controller";
 
-const SMSRouter = Router()
+const SMSRouter = Router();
 
-/** 
+/**
  * @openapi
  * paths:
  *  /sms/{schedule_id}:
@@ -48,13 +48,9 @@ const SMSRouter = Router()
  *              - UNKNOWN
  *          required: false
  *          description: this is for filtring by sent or not sent schedules
- *         
-*/
+ *
+ */
 
+SMSRouter.get("/sms/:schedule_id", httpGetSMS);
 
-
-SMSRouter.get("/sms/:schedule_id", httpGetSMS)
-
-
-
-export default SMSRouter
+export default SMSRouter;

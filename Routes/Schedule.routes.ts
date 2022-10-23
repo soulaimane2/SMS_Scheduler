@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { httpAddSchedule, httpGetSchedules } from "../controllers/Schedule.controller";
+import {
+  httpAddSchedule,
+  httpGetSchedules,
+} from "../controllers/Schedule.controller";
 
-const ScheduleRoutes = Router()
+const ScheduleRoutes = Router();
 
-/** 
+/**
  * @openapi
  * paths:
  *  /schedules/add:
@@ -12,14 +15,14 @@ const ScheduleRoutes = Router()
  *      description:  runNow field is optional the default is false
  *      requestBody:
  *        required: true
- *        content: 
+ *        content:
  *          application/json:
  *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                message:
  *                  type: string
- *                  required: true 
+ *                  required: true
  *                time:
  *                  type: string
  *                  example: "example: 2022-10-21T02:49:07.701+00:00"
@@ -28,16 +31,16 @@ const ScheduleRoutes = Router()
  *                  items:
  *                    type: string
  *                    example: +xxxxxxxxxxxx
- *                  required: true 
+ *                  required: true
  *                runNow:
  *                  type: boolean
  *                  required: false
  *                  default: false
- *         
-*/
-ScheduleRoutes.post("/schedules/add", httpAddSchedule)
+ *
+ */
+ScheduleRoutes.post("/schedules/add", httpAddSchedule);
 
-/** 
+/**
  * @openapi
  * paths:
  *  /schedules:
@@ -71,12 +74,9 @@ ScheduleRoutes.post("/schedules/add", httpAddSchedule)
  *            type: boolean
  *          required: false
  *          description: this is for filtring by sent or not sent schedules
- *         
-*/
+ *
+ */
 
+ScheduleRoutes.get("/schedules", httpGetSchedules);
 
-ScheduleRoutes.get("/schedules", httpGetSchedules)
-
-
-
-export default ScheduleRoutes
+export default ScheduleRoutes;

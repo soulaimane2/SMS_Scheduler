@@ -1,18 +1,18 @@
-import dotenv from "dotenv"
-import mongoose from "mongoose"
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 
-dotenv.config()
+dotenv.config();
 
-const db_string:string = String(process.env.DB_STRING)
+const db_string: string = String(process.env.DB_STRING);
 
 export const connectDb = async () => {
-    await mongoose.connect(db_string)
-}
+  await mongoose.connect(db_string);
+};
 
 mongoose.connection.once("open", () => {
-    console.log("Connected successfuly")
-})
+  console.log("Connected successfuly");
+});
 
-mongoose.connection.once("error",(err: any) => {
-    throw new Error(err)
-})
+mongoose.connection.once("error", (err: any) => {
+  throw new Error(err);
+});
