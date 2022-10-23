@@ -120,7 +120,7 @@ To get a local copy up and running there are 2 ways (docker or manually)
     ```sh
     docker build . -t [Container tag]
     ``` 
-6.run the container
+6. run the container
 
     ```sh
     docker run -p [port you want to expose]:[port specified in the .env file] [Container tag]
